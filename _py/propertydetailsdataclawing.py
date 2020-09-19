@@ -11,44 +11,45 @@ keyboard = Controller()
 print('The current pointer position is {0}'.format(
     mouse.position))
 
-zcpi = pd.read_csv("zip2propID.csv", index_col=0)
-zcpi2 = zcpi.rename(columns = {"ZIP Code" : "Property ID"})
-# pIDs = zcpi[1]
-# print(pIDs)
-print(zcpi2)
-# for zipcode in zipcodes:
-#     print('Searching properties under ' + str(zipcode) + ' ZIP code...')
-#
-#     idx = zipcodes.index(zipcode)+1
-#     if idx == 1:
-#         # Move mouse pointer to internet browser and click on it
-#         mouse.position = (617, 842)
-#         mouse.press(Button.left)
-#         mouse.release(Button.left)
-#         print('Now we have moved it to {0}'.format(
-#             mouse.position) + ' to open the browser')
-#         time.sleep(1)
-#
-#     # Move mouse pointer to property search bar and click on it
-#     mouse.position = (574, 294)
-#     print('Now we have moved it to {0}'.format(
-#         mouse.position) + ' to click the property search bar')
-#     mouse.press(Button.left)
-#     mouse.release(Button.left)
-#
-#     # Type ZIP code in the property search bar and click ENTER
-#     keyboard.type(str(zipcode))
-#     keyboard.press(Key.enter)
-#     keyboard.release(Key.enter)
-#     time.sleep(6)
-#
-#     # Move mouse pointer to 'Export' and click it
-#     mouse.position = (1330, 183)
-#     print('Now we have moved it to {0}'.format(
-#         mouse.position) + ' to click the Export button')
-#     mouse.press(Button.left)
-#     mouse.release(Button.left)
-#     time.sleep(3)
+zcpi = pd.read_csv("zip2propID.csv", index_col='ZIPCode', header=0)
+ZIPs = list(zcpi.index.values)
+pIDs = list(zcpi.PropertyID)
+for zip in ZIPs:
+    zip =ZIPs[0]
+    # print('Searching properties under ' + str(zip) + ' ZIP code...')
+    # print('Property ID is ' + str(pIDs[ZIPs.index(zip)]))
+
+
+    idx = ZIPs.index(zip)+1
+    if idx == 1:
+        # Move mouse pointer to internet browser and click on it
+        mouse.position = (617, 842)
+        mouse.press(Button.left)
+        mouse.release(Button.left)
+        print('Now we have moved it to {0}'.format(
+            mouse.position) + ' to open the browser')
+        time.sleep(1)
+
+    # Move mouse pointer to property search bar and click on it
+    mouse.position = (574, 294)
+    print('Now we have moved it to {0}'.format(
+        mouse.position) + ' to click the property search bar')
+    mouse.press(Button.left)
+    mouse.release(Button.left)
+
+    # Type property ID in the property search bar and click ENTER
+    keyboard.type(str(pIDs[ZIPs.index(zip)]))
+    keyboard.press(Key.enter)
+    keyboard.release(Key.enter)
+    time.sleep(7)
+
+    # Move mouse pointer to 'Details' and click it
+    mouse.position = (1326, 320)
+    print('Now we have moved it to {0}'.format(
+        mouse.position) + ' to click the Export button')
+    mouse.press(Button.left)
+    mouse.release(Button.left)
+    time.sleep(3)
 #
 #     # CLick ENTER when asking how to save it
 #     keyboard.press(Key.enter)
