@@ -34,7 +34,7 @@ class Dataclass:
                 # collect all bad csvs
                 a = pd.read_csv(f, names=headings)  # idk why but this fixes it
                 a = a.drop(a.index[0])
-            a[len(a.columns) > 8]
+            # a[len(a.columns) > 8]
             # find rows where columns > 8
             # delete rows where this occurs
 
