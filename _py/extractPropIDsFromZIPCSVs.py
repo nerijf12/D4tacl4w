@@ -38,33 +38,21 @@ for f in all_filenames:
         a = pd.read_csv(f)
         propIDs[zipcodes[all_filenames.index(f)]] = a['Property ID'][0]
         if a.empty:
-            # print("File " + str(all_filenames.index(f)+1) + "is empty. Skipping...")
+            print("File " + str(all_filenames.index(f)+1) + "is empty. Skipping...")
             propIDs[zipcodes[all_filenames.index(f)]] = 'NaN'
             continue
-        # print(a.head())
     except:
         # print(f)
         errorfiles.append(f)
         # print(f"{f}\n{len(pd.read_csv(f).columns)}.")
-    # print(a)
-print(propIDs)
-print(len(propIDs))
-# print(errorfiles)
-# print(len(errorfiles))
+# print(propIDs)
+# print(len(propIDs))
 
-# clean up this shit
-# ['PropertySearchResults(33).csv', 'PropertySearchResults(34).csv',
-# 'PropertySearchResults(39).csv', 'PropertySearchResults(44).csv',
-# 'PropertySearchResults(49).csv', 'PropertySearchResults(50).csv',
-# 'PropertySearchResults(51).csv', 'PropertySearchResults(55).csv',
-# 'PropertySearchResults(56).csv', 'PropertySearchResults(60).csv',
-# 'PropertySearchResults(65).csv', 'PropertySearchResults(66).csv',
-# 'PropertySearchResults(67).csv', 'PropertySearchResults(68).csv',
-# 'PropertySearchResults(69).csv', 'PropertySearchResults(72).csv',
-# 'PropertySearchResults(74).csv', 'PropertySearchResults(30).csv']
-# 18
-
-
-# combined_csv = pd.concat([pd.read_csv(f) for f in all_filenames])
-#export to csv
-# combined_csv.to_csv( "combined_csv.csv", index=False, encoding='utf-8-sig')
+# save zip-to-propID dictionary to CSV file
+newcsvfilename = '../_py/zip2propID.csv'
+propIDs_df = pd.DataFrame.from_dict(propIDs, orient="index", columns=['Property ID'])
+# propIDs_df1 = propIDs_df.rename(columns = {"ZIP" : "Signal"})
+# propIDs_df.columns.values[0] = 'ZIP Code'
+# propIDs_df.columns.values[1] = 'Property ID'
+print(propIDs_df)
+propIDs_df.to_csv(newcsvfilename, header=["Property ID"])
