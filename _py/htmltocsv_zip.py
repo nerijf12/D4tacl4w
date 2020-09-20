@@ -15,7 +15,7 @@ with open(DIR + ZIPCSV) as csv_file:
 			zipcode = row[0]
 			property_id = row[1]
 
-			# print(zipcode + " " + property_id)
+			print(zipcode + " " + property_id)
 
 			page = requests.get('http://bexar.trueautomation.com/clientdb/Property.aspx?cid=110&prop_id=' + property_id)
 			table = html.fromstring(page.content)
