@@ -1,16 +1,17 @@
 import os
 import glob
 import pandas as pd
+import pickle
 import numpy as np
 
-os.chdir("../_propcsv")
+os.chdir("../_propcsv_zipnames")
 
-class Dataclass:
+class Dataclaw:
     def __init__(self):
         self.df = self.read_data()
-        print(self.df.columns)
-        print(len(self.df))
-        print(self.df['Unnamed: 8'][0])
+        # print(self.df.columns)
+        # print(len(self.df))
+        # print(self.df['Unnamed: 8'][0])
 
     def read_data(self):
         extension = 'csv'
@@ -43,7 +44,11 @@ class Dataclass:
             frames.append(a)
 
         combined_df = pd.concat(frames)
-        return self.preprocess_data(combined_df)
+
+        # 268 errors where NaN values in a weird 9th column, so dropped those
+        reshape_df = combined_df.drop(labels='Unnamed: 8', axis=1)
+
+        return self.preprocess_data(reshape_df)
 
     def preprocess_data(self, df):
         # changing data types of numbers (str to numbers)
@@ -51,7 +56,8 @@ class Dataclass:
         df['Doing Business As'] = df['Doing Business As'].values.astype(str)
 
         a = []
-
+        # df = self.clean_appraised_nans(df)
+        print('preprocess_data before \n', df.head())
         for num in df['Appraised Value']:
             # removing commas from numbers like 100,000
             try:
@@ -59,10 +65,9 @@ class Dataclass:
             except: # in case of float NaN
                 a.append(0)
         df['Appraised Value'] = a
+        print('preprocess_data after \n', df.head())
+
         return df
 
-
-
-
-test1 = Dataclass()
-print(test1.df.head())
+dataset = Dataclaw()
+# dataset.df.to_pickle('bcad_propval.pkl')
