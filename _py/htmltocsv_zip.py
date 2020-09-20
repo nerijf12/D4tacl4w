@@ -4,8 +4,6 @@ import requests, csv, os, os.path
 DIR = '../_propcsv_zipnames/'
 ZIPCSV = '../_zipcsv/'
 list = os.listdir(DIR)
-# number_files = len(list)
-# print(number_files)
 
 for zipcode in list:
 	index = 0
