@@ -70,4 +70,4 @@ class Dataclaw:
         return df
 
 dataset = Dataclaw()
-# dataset.df.to_pickle('bcad_propval.pkl')
+# dataset.df.to_pickle('../../bcad_propval.pkl')
