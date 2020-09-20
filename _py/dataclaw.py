@@ -70,4 +70,5 @@ class Dataclaw:
         return df
 
 dataset = Dataclaw()
-# dataset.df.to_pickle('bcad_propval.pkl')
+os.chdir("C:/Users/KayZac/Desktop")
+dataset.df.to_pickle('bcad_propval.pkl')
