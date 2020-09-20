@@ -1,44 +1,38 @@
 import os
 import glob
 import pandas as pd
-os.chdir("C:/Users/KayZac/Downloads")
+os.chdir("../_propcsv")
 
 extension = 'csv'
 all_filenames = glob.glob('*.{}'.format(extension))
 all_filenames.sort(key=os.path.getmtime)
-errorfiles = []
 
-#combine all files in the list
+
+
+# getting column headings of known correct csv
+df = pd.read_csv(all_filenames[0])
+headings = list(df.columns)
+
+frames = []
+
+# go through and find which csv cannot become df
 for f in all_filenames:
     # print(f)
     try:
         a = pd.read_csv(f)
-        if a.empty:
-            # print("File " + str(all_filenames.index(f)+1) + "is empty. Skipping...")
+        if a.empty: #skip empty
             continue
-        # print(a.head())
-    except:
-        # print(f)
-        errorfiles.append(f)
-        # print(f"{f}\n{len(pd.read_csv(f).columns)}.")
-    # print(a)
+    except: # checks to make df out of each of csvs in errorfiles
+        # collect all bad csvs
+        a = pd.read_csv(f, names=headings)  # idk why but this fixes it
+        a = a.drop(a.index[0])
+    a['Zipcode'] = f.split('.')[-2]
+    frames.append(a)
 
-print(errorfiles)
-print(len(errorfiles))
-
-# clean up this shit
-# ['PropertySearchResults(33).csv', 'PropertySearchResults(34).csv',
-# 'PropertySearchResults(39).csv', 'PropertySearchResults(44).csv',
-# 'PropertySearchResults(49).csv', 'PropertySearchResults(50).csv',
-# 'PropertySearchResults(51).csv', 'PropertySearchResults(55).csv',
-# 'PropertySearchResults(56).csv', 'PropertySearchResults(60).csv',
-# 'PropertySearchResults(65).csv', 'PropertySearchResults(66).csv',
-# 'PropertySearchResults(67).csv', 'PropertySearchResults(68).csv',
-# 'PropertySearchResults(69).csv', 'PropertySearchResults(72).csv',
-# 'PropertySearchResults(74).csv', 'PropertySearchResults(30).csv']
-# 18
+combined_df = pd.concat(frames)
 
 
-# combined_csv = pd.concat([pd.read_csv(f) for f in all_filenames])
-#export to csv
-# combined_csv.to_csv( "combined_csv.csv", index=False, encoding='utf-8-sig')
+# for myerr in errorfiles:
+#     b = pd.read_csv(myerr, names=headings)  # idk why but this fixes it
+#     newb = b.drop(b.index[0])
+#     print(newb.head())

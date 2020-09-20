@@ -3,12 +3,18 @@ import pandas as pd
 import numpy as np
 import os
 import glob
-os.chdir("C:/Users/KayZac/Downloads")
+os.chdir("../_propcsv")
+
+###############################
+# DATA PREPROCESSING
+###############################
+
 
 # extension = 'csv'
 # all_filenames = glob.glob('*.{}'.format(extension))
 # all_filenames.sort(key=os.path.getmtime)
-df = pd.read_csv('PropertySearchResults(18).csv')
+df = pd.read_csv('PropertySearchResults(19).csv')
+
 # changing data types of numbers (str to numbers)
 df['Property ID'] = df['Property ID'].values.astype(int)
 df['Doing Business As'] = df['Doing Business As'].values.astype(str)
@@ -19,6 +25,14 @@ for num in df['Appraised Value']:
     a.append(int(num.replace(",", "")))
 df['Appraised Value'] = a
 
+# make zipcode new field
+
+
+# zipcode = 78207
+# df['Indexes'] = df['Property Address'].str.find(str(zipcode))
+# df["Indexes"] = data[]
+# print(df.head())
+
 # previewing dataframe
 # print(df.head())
 # print(df.columns)
@@ -26,6 +40,23 @@ df['Appraised Value'] = a
 #     print(col)
 #     print(type(df[col][0])) # read first entry of row
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###############################
+# DATA ANALYSIS AND VISUALIZATION
 ###############################
 import matplotlib.pyplot as plt
 # df [col] [grab index of my NaN vals]
@@ -35,10 +66,10 @@ import matplotlib.pyplot as plt
 homes = df[df['Doing Business As'] == 'nan']
 
 # need to do these +/- 3 stds of the mean
-# plt.hist(homes['Appraised Value'][homes['Appraised Value'] < 1e6], bins=100)
-# plt.show()
-# plt.hist(homes['Appraised Value'][homes['Appraised Value'] > 1e6], bins=100)
-# plt.show()
+plt.hist(homes['Appraised Value'][homes['Appraised Value'] < 1e6], bins=100)
+plt.show()
+plt.hist(homes['Appraised Value'][homes['Appraised Value'] >= 1e6], bins=100)
+plt.show()
 
 print(homes['Appraised Value'].describe())
 
