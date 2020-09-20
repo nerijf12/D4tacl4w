@@ -4,11 +4,8 @@ import requests, csv, os, os.path
 DIR = '../_propcsv_zipnames/'
 ZIPCSVDIR = '../_zipcsv/'
 ZIPCSV = "zip2propID.csv"
-# zipcode = "zip2propID.csv"
 list = os.listdir(DIR)
 
-# for zipcode in list:
-# file = open(zipcode, "r")
 with open(DIR + ZIPCSV) as csv_file:
 	reader = csv.reader(csv_file, delimiter=',')
 	for row in reader:
@@ -23,9 +20,7 @@ with open(DIR + ZIPCSV) as csv_file:
 			page = requests.get('http://bexar.trueautomation.com/clientdb/Property.aspx?cid=110&prop_id=' + property_id)
 			table = html.fromstring(page.content)
 
-			#This will create a list of buyers:
 			taxrate = table.xpath('//table[@class="tableData"]/tr/td//text()')
-			#This will create a list of prices
 			description = table.xpath('//tr/td[@class="propertyTJDescription"]//text()')
 
 			f = open(ZIPCSVDIR + zipcode + ".csv", "a")
@@ -42,6 +37,5 @@ with open(DIR + ZIPCSV) as csv_file:
 				index += 1
 
 			f.close()
-	# break
 
 csv_file.close()
